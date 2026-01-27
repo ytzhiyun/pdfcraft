@@ -297,7 +297,7 @@
         "email": {
           "title": "メール",
           "description": "メールをお送りください。24〜48時間以内に返信いたします。",
-          "action": "contact@pdfcraft.app"
+          "action": "pdf@17ai.eu.org"
         },
         "github": {
           "title": "GitHub",
