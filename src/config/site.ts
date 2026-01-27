@@ -27,7 +27,7 @@ export const siteConfig = {
   seo: {
     titleTemplate: '%s | PDFCraft',
     defaultTitle: 'PDFCraft - Professional PDF Tools',
-    twitterHandle: '@pdfcraft',
+    twitterHandle: '@Anyway889',
     locale: 'en_US',
   },
 };
