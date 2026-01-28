@@ -132,7 +132,7 @@ export default function ContactPageClient({ locale }: ContactPageClientProps) {
                   <p className="text-sm text-[hsl(var(--color-muted-foreground))] mb-4">
                     {method.description}
                   </p>
-                  <span className="text-sm font-medium text-[hsl(var(--color-primary))] mt-auto group-hover:underline">
+                  <span className="text-sm font-semibold text-[hsl(var(--color-primary))] mt-auto group-hover:underline">
                     {method.action}
                   </span>
                 </div>
