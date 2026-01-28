@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { Mail, MessageSquare, Github, Twitter, Users, UserPlus, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, MessageSquare, Github, Twitter, Send, CheckCircle, AlertCircle, Users, UserPlus, X } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/Button';
@@ -18,6 +18,7 @@ type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
 export default function ContactPageClient({ locale }: ContactPageClientProps) {
   const t = useTranslations('contactPage');
+  const [activeQrCode, setActiveQrCode] = useState<{ title: string; image: string } | null>(null);
   const tCommon = useTranslations('common');
   const [formStatus, setFormStatus] = useState<FormStatus>('idle');
   const [formData, setFormData] = useState({
@@ -33,7 +34,8 @@ export default function ContactPageClient({ locale }: ContactPageClientProps) {
       title: t('methods.email.title'),
       description: t('methods.email.description'),
       action: t('methods.email.action'),
-      href: 'mailto:contact@pdfcraft.gitu.net',
+      href: 'mailto:pdf@17ai.eu.org',
+      isEmail: true,
     },
    {
       icon: Users, // 这里把 Github 换成了 Users (代表群组)
@@ -41,6 +43,7 @@ export default function ContactPageClient({ locale }: ContactPageClientProps) {
       description: t('methods.github.description'),
       action: '立即加入群聊', // 这里可以直接写中文，也可以去翻译文件里配
       href: 'https://image.17ai.eu.org/file/文档类/1769572100878_加入群聊二维码.png',
+      isEmail: false,
     },
     {
       icon: UserPlus, // 这里把 Twitter 换成了 UserPlus (代表加好友)
@@ -48,6 +51,7 @@ export default function ContactPageClient({ locale }: ContactPageClientProps) {
       description: t('methods.twitter.description'),
       action: '立即添加好友', // 同上
       href: 'https://image.17ai.eu.org/file/文档类/1769571990970_单人二维码.png', // 图片链接
+      isEmail: false,
     },
   ];
 
@@ -113,35 +117,89 @@ export default function ContactPageClient({ locale }: ContactPageClientProps) {
         {/* Contact Methods */}
         <section className="py-12">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {contactMethods.map((method, index) => {
-                const Icon = method.icon;
+            {/* 👇 替换后的新网格布局 */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {contactMethods.map((method, index) => {
+              // 1. 定义卡片内部通用的显示内容
+              const CardContent = (
+                <div className="p-6 h-full text-center flex flex-col items-center">
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[hsl(var(--color-primary)/0.1)] mb-4 group-hover:scale-110 transition-transform duration-300">
+                     <method.icon className="h-6 w-6 text-[hsl(var(--color-primary))]" />
+                  </div>
+                  <h3 className="font-semibold text-[hsl(var(--color-foreground))] mb-2">
+                    {method.title}
+                  </h3>
+                  <p className="text-sm text-[hsl(var(--color-muted-foreground))] mb-4">
+                    {method.description}
+                  </p>
+                  <span className="text-sm font-medium text-[hsl(var(--color-primary))] mt-auto group-hover:underline">
+                    {method.action}
+                  </span>
+                </div>
+              );
+
+              // 2. 逻辑判断：是邮箱? -> 用 <a> 标签跳转
+              if (method.isEmail) {
                 return (
                   <a
                     key={index}
                     href={method.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
+                    className="block bg-card rounded-xl border shadow-sm hover:shadow-md transition-all duration-300 group"
                   >
-                    <Card className="p-6 h-full text-center" hover>
-                      <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[hsl(var(--color-primary)/0.1)] mb-4">
-                        <Icon className="h-6 w-6 text-[hsl(var(--color-primary))]" />
-                      </div>
-                      <h3 className="font-semibold text-[hsl(var(--color-foreground))] mb-2">
-                        {method.title}
-                      </h3>
-                      <p className="text-sm text-[hsl(var(--color-muted-foreground))] mb-4">
-                        {method.description}
-                      </p>
-                      <span className="text-sm font-medium text-[hsl(var(--color-primary))]">
-                        {method.action}
-                      </span>
-                    </Card>
+                    {CardContent}
                   </a>
                 );
-              })}
+              } 
+              // 3. 逻辑判断：是二维码? -> 用 <button> 标签弹窗
+              else {
+                return (
+                  <button
+                    key={index}
+                    onClick={() => setActiveQrCode({ title: method.title, image: method.href })}
+                    className="block w-full bg-card rounded-xl border shadow-sm hover:shadow-md transition-all duration-300 group cursor-pointer"
+                  >
+                    {CardContent}
+                  </button>
+                );
+              }
+            })}
+          </div>
+          {/* 👇 弹窗组件 (新增的代码，放在网格下面) */}
+          {activeQrCode && (
+            <div 
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+              onClick={() => setActiveQrCode(null)}
+            >
+              <div 
+                className="relative bg-white dark:bg-slate-900 rounded-xl shadow-2xl max-w-sm w-full p-6 text-center animate-in zoom-in-95 duration-200"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* 关闭按钮 */}
+                <button 
+                  onClick={() => setActiveQrCode(null)}
+                  className="absolute top-4 right-4 text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+
+                {/* 标题 */}
+                <h3 className="text-xl font-bold mb-6">{activeQrCode.title}</h3>
+
+                {/* 二维码图片 */}
+                <div className="bg-white p-2 rounded-lg inline-block border shadow-inner mb-4">
+                  <img 
+                    src={activeQrCode.image} 
+                    alt="QR Code" 
+                    className="w-48 h-48 object-contain"
+                  />
+                </div>
+
+                <p className="text-sm text-gray-500">
+                  请使用微信 <span className="font-semibold text-green-600">扫一扫</span>
+                </p>
+              </div>
             </div>
+          )}
           </div>
         </section>
 
