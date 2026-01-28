@@ -60,12 +60,35 @@ export default function ContactPageClient({ locale }: ContactPageClientProps) {
     e.preventDefault();
     setFormStatus('submitting');
 
-    // Simulate form submission (in a real app, this would send to an API)
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      // 👇 【请确认】这里填您想接收邮件的真实邮箱
+      const targetEmail = "pdf@17ai.eu.org"; 
+      
+      const response = await fetch(`https://formsubmit.co/ajax/${targetEmail}`, {
+        method: "POST",
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject || "来自 PDFCraft 官网的新消息",
+          message: formData.message
+        })
+      });
 
-    // For demo purposes, always succeed
-    setFormStatus('success');
-    setFormData({ name: '', email: '', subject: '', message: '' });
+      if (response.ok) {
+        setFormStatus('success');
+        // 发送成功后，清空输入框，方便用户发下一条
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setFormStatus('error');
+      }
+    } catch (error) {
+      console.error("发送失败:", error);
+      setFormStatus('error');
+    }
   };
 
   return (
