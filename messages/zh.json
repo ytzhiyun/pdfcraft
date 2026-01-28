@@ -339,14 +339,14 @@
         "action": "pdf@17ai.eu.org"
       },
       "github": {
-        "title": "GitHub",
-        "description": "报告错误、请求功能或为项目做贡献。",
-        "action": "在 GitHub 上查看"
+        "title": "加入企业微信群",
+        "description": "点击下方链接，直接加入我们的官方客户服务群。",
+        "action": "立即加入群聊"
       },
       "twitter": {
-        "title": "推特",
-        "description": "关注我们要获取更新和公告。",
-        "action": "@pdfcraft"
+        "title": "添加企业微信客服",
+        "description": "添加我的企业微信，获取一对一专属技术支持。",
+        "action": "立即添加好友"
       }
     },
     "form": {
