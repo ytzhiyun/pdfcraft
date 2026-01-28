@@ -40,14 +40,14 @@ export default function ContactPageClient({ locale }: ContactPageClientProps) {
       title: t('methods.github.title'),
       description: t('methods.github.description'),
       action: '立即加入群聊', // 这里可以直接写中文，也可以去翻译文件里配
-      href: 'https://work.weixin.qq.com/gm/9b7d5ace90b48117e9095d1b0365cbb2',
+      href: 'https://image.17ai.eu.org/file/文档类/1769572100878_加入群聊二维码.png',
     },
     {
       icon: UserPlus, // 这里把 Twitter 换成了 UserPlus (代表加好友)
       title: t('methods.twitter.title'),
       description: t('methods.twitter.description'),
       action: '立即添加好友', // 同上
-      href: '#', // 这里暂时填 #，如果您有客服链接请替换
+      href: 'https://image.17ai.eu.org/file/文档类/1769571990970_单人二维码.png', // 图片链接
     },
   ];
 
