@@ -41,6 +41,7 @@ export const navConfig = {
     { title: 'Tools', href: '/tools' },
     { title: 'About', href: '/about' },
     { title: 'FAQ', href: '/faq' },
+    { title: 'Contact', href: '/contact' },
   ],
   footerNav: [
     { title: 'Privacy', href: '/privacy' },
