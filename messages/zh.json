@@ -339,12 +339,12 @@
         "action": "pdf@17ai.eu.org"
       },
       "github": {
-        "title": "加入企业微信群",
+        "title": "加入微信群",
         "description": "点击下方链接，直接加入我们的官方客户服务群。",
         "action": "立即加入群聊"
       },
       "twitter": {
-        "title": "添加企业微信客服",
+        "title": "添加微信客服",
         "description": "添加我的企业微信，获取一对一专属技术支持。",
         "action": "立即添加好友"
       }
