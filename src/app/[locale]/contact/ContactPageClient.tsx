@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { Mail, MessageSquare, Github, Twitter, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, MessageSquare, Github, Twitter, Users, UserPlus, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/Button';
@@ -35,19 +35,19 @@ export default function ContactPageClient({ locale }: ContactPageClientProps) {
       action: t('methods.email.action'),
       href: 'mailto:contact@pdfcraft.gitu.net',
     },
-    {
-      icon: Github,
+   {
+      icon: Users, // 这里把 Github 换成了 Users (代表群组)
       title: t('methods.github.title'),
       description: t('methods.github.description'),
-      action: t('methods.github.action'),
-      href: 'https://github.com/PDFCraftTool/pdfcraft',
+      action: '立即加入群聊', // 这里可以直接写中文，也可以去翻译文件里配
+      href: 'https://work.weixin.qq.com/gm/9b7d5ace90b48117e9095d1b0365cbb2',
     },
     {
-      icon: Twitter,
+      icon: UserPlus, // 这里把 Twitter 换成了 UserPlus (代表加好友)
       title: t('methods.twitter.title'),
       description: t('methods.twitter.description'),
-      action: t('methods.twitter.action'),
-      href: 'https://x.com/PDFCraftTool',
+      action: '立即添加好友', // 同上
+      href: '#', // 这里暂时填 #，如果您有客服链接请替换
     },
   ];
 
